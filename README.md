@@ -1,2 +1,2 @@
 # pdfstuff
-Library to extract PDF
+using 2 x different NUGET packages to get extractions from large PDF files

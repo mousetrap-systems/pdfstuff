@@ -40,8 +40,8 @@ namespace ExtractionExample
                     {
                         // MAIN PDF extraction WORK!
 
-                        FileInfo? result1 = PDFPIG.ExtractText(selectedFile.FullName, reportProgress: true, useVerticalBlocksLayout: false);
-                        FileInfo? result2 = PDFiText7.ExtractText(selectedFile.FullName, reportProgress: true);
+                        FileInfo? result1 = PDFPIG.ExtractText(selectedFile.FullName, reportProgress: true, useVerticalBlocksLayout: false, useExactLineDetection: false); // specialized extraction optional
+                        FileInfo? result2 = PDFiText7.ExtractText(selectedFile.FullName, reportProgress: true); // raw extraction
 
                         // Now display the results of that selection
 

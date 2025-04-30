@@ -21,7 +21,7 @@ namespace ExtractionExample
         /// </summary>
         /// <param name="reportProgress">Optionally Write progress report to the console, if present (allows visual tracking of large batches), involves threading</param>
         /// <param name="useVerticalBlocks">Special 'vertical' mode to capture column based data (your mileage may vary, check document layout)</param>
-        public static FileInfo? ExtractText(string fullFileNamePathToPDF, bool reportProgress, bool useVerticalBlocksLayout)
+        public static FileInfo? ExtractText(string fullFileNamePathToPDF, bool reportProgress, bool useVerticalBlocksLayout, bool useExactLineDetection)
         {
             FileInfo fi = new FileInfo(fullFileNamePathToPDF);
 
@@ -107,13 +107,13 @@ namespace ExtractionExample
 
                             // Note: the text boxes are from left to right ...
 
-                            if (block.IsDataCandidate())
+                            if (useExactLineDetection == true && block.IsDataCandidate()) // indicates we need to match data exactly
                             {
                                 bucket.Add(block.TextLines);
                             }
                             else
                             {
-                                // put it into the file, BUT prefix it with the equivalent of a REM command...
+                                // anything else ... put it into the file, BUT prefix it with the equivalent of a REM command...
                                 processed.Append($"##### {block.Text}");
                             }
 
@@ -127,7 +127,6 @@ namespace ExtractionExample
                         // when we have finished the page,
                         // we can output from the data bucket ...
                         processed.Append(bucket.Dump());
-
                     }
 
                     processed.AppendLine($"{Environment.NewLine}{Environment.NewLine}##### ### Page ###{current_page}### Finished #####{Environment.NewLine}{Environment.NewLine}");
